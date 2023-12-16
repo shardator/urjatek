@@ -3,14 +3,16 @@ import pygame
 
 from engine.starsystem import StarSystem
 from engine.hyperlane import HyperLane
+from engine.galaxy_interface import GalaxyInterface
 
 
-class Galaxy:
+class Galaxy(GalaxyInterface):
     def __init__(self, num_star_systems: int, width: int, height: int):
         self.systems = []
         self.width = width
         self.height = height
         self.hyperLanes = set()
+        self.startingSystems = []
 
         for i in range(0, num_star_systems):
             ready = False
@@ -34,6 +36,14 @@ class Galaxy:
 
             new_system = StarSystem((int(x), int(y)), int(random.random() * 10 + 1), 0)
             self.systems.append(new_system)
+
+        # TODO FIGYELEM: Több kezdő rendszer kell!
+        self.startingSystems = [random.choice(list(self.systems))]
+
+    def get_starting_system(self, index: int):
+        assert index >= 1
+        assert index <= len(self.startingSystems)
+        return self.startingSystems[index - 1]
 
     def draw(self, screen):
         for hyper_lane in self.hyperLanes:

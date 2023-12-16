@@ -1,4 +1,5 @@
 from engine.hyperlane import HyperLane
+from engine.player import Player
 
 
 class StarSystem:
@@ -10,6 +11,12 @@ class StarSystem:
         self.owner = None
         self.outgoingLanes = set()  # Kimenő utak listája
         self.incomingLanes = set()  # Bejövő utak listája
+
+    def set_player(self, player: Player):
+        self.owner = player
+
+    def is_owned_by(self, player: Player) -> bool:
+        return self.owner is player
 
     def produce_fleet(self):
         # Implementáljátok, hogy mi történjen flotta gyártásakor
